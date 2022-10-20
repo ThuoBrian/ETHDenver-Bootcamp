@@ -1,0 +1,16 @@
+
+Discuss in your teams what a decentralized version of a game like Monopoly would be like, if there was no software on a central server.
+
+Consider:
+- What are the essential pieces of functionality?
+	- People's contract consensus.
+	- Dice Roller Generator.
+	- Shared Transaction Ledger.
+	- Transaction Explorer
+
+- How would people cheat?
+	- Trying to change the transactions details.
+	- People's contract Consensus will not be followed.
+
+- How could you prevent them from cheating?
+	
