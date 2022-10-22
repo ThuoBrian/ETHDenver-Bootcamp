@@ -1,36 +1,32 @@
-// SPDX-License-Identifier: GPL-3.0
+// SPDX-License-Identifier: None
 
 pragma solidity 0.8.17;
 
-contract BootcampContract {
-    
-    uint256 number;
 
+contract BootcampContract {
+
+    uint256 number;
     address owner;
 
-    mapping(address => uint256)getNumber;
-
-       constructor() {
-        owner = msg.sender;
+    constructor (){
+        owner == (msg.sender);
     }
 
-    modifier onlyOwner{
-        if(msg.sender == owner){
 
+    function updateAddress() external view returns(address){
+        if(msg.sender == owner){
             return 0x000000000000000000000000000000000000dEaD;
         }
-        return owner
+        return owner;
     }
 
-    function store(uint256 num) public onlyOwner{
+
+    function store(uint256 num) public {
         number = num;
     }
 
-    function retrieve()public view returns(uint){
-        return (number);
-    }
 
-    function getUserNumber(address user) public view returns(uint256){
-        return getNumber[user];
+    function retrieve() public view returns (uint256){
+        return number;
     }
 }
