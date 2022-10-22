@@ -1,23 +1,25 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity 0.8.17;
 
 contract BootcampContract {
     
-    uint256 public number;
+    uint256 number;
 
-    address public owner;
+    address owner;
 
     mapping(address => uint256)getNumber;
 
-    modifier onlyOwner{
-        if(msg.sender == owner){
-            _;
-        }
+       constructor() {
+        owner = msg.sender;
     }
 
-    constructor() {
-        owner = msg.sender;
+    modifier onlyOwner{
+        if(msg.sender == owner){
+
+            return 0x000000000000000000000000000000000000dEaD;
+        }
+        return owner
     }
 
     function store(uint256 num) public onlyOwner{
