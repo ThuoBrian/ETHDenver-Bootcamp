@@ -25,9 +25,7 @@ contract BootcampContract {
     }
 
     function retrieve()public view returns(uint){
-
-    return (number);
-
+        return (number);
     }
 
     function getUserNumber(address user) public view returns(uint256){
