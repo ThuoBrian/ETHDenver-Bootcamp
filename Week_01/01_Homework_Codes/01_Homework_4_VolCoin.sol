@@ -26,22 +26,22 @@ contract VolcanoCoin {
         if(msg.sender == owner)
         _;
     }
-        function getTotalSupply() public view returns(uint256){
-        return coinsSupply;
-    }
-       function getChangeSupply(uint256 _coins)public onlyOwner{
+  
+    function getChangeSupply(uint256 _coins)public onlyOwner{
         uint256 coins;
-        PaymentInfo.coinsSupply = 100;
         PaymentInfo.owner = 0x000000000000000000000000000000000000dEaD;
         coins = coinsSupply + _coins;
-        coinsSupply = coins;
-        emit logChangeSupply(coinsSupply);
+        PaymentInfo.coinsSupply = coins;
+        emit logChangeSupply(PaymentInfo.coinsSupply);
+    }
+    function getTotalSupply() public view returns(uint256){
+        return PaymentInfo.coinsSupply;
     }
 
     function getPaymentInfo() public view returns(uint256){
         return PaymentInfo.coinsSupply;
     }
-    function getUserNumber(address _owner) public view returns(uint256){
-        return getNumber[_owner];
+    function getUserNumber() public view returns(uint256){
+        return getNumber[owner];
     }
 }
