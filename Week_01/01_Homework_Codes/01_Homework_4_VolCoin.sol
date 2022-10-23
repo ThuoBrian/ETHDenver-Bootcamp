@@ -29,7 +29,7 @@ contract VolcanoCoin {
   
     function getChangeSupply(uint256 _coins)public onlyOwner{
         uint256 coins;
-        PaymentInfo.owner = 0x000000000000000000000000000000000000dEaD;
+        PaymentInfo.owner = msg.sender ;
         coins = coinsSupply + _coins;
         PaymentInfo.coinsSupply = coins;
         emit logChangeSupply(PaymentInfo.coinsSupply);
@@ -42,6 +42,6 @@ contract VolcanoCoin {
         return PaymentInfo.coinsSupply;
     }
     function getUserNumber() public view returns(uint256){
-        return getNumber[owner];
+        return getNumber[PaymentInfo.owner];
     }
 }
