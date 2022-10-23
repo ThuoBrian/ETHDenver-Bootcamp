@@ -6,6 +6,7 @@ contract VolcanoCoin {
     
     address owner;
     uint256 coinsSupply = 10000;
+
     mapping(address => uint256)getNumber;
     
     struct Payment{
@@ -30,6 +31,8 @@ contract VolcanoCoin {
     }
        function getChangeSupply(uint256 _coins)public onlyOwner{
         uint256 coins;
+        PaymentInfo.coinsSupply = 100;
+        PaymentInfo.owner = 0x000000000000000000000000000000000000dEaD;
         coins = coinsSupply + _coins;
         coinsSupply = coins;
         emit logChangeSupply(coinsSupply);
@@ -38,8 +41,7 @@ contract VolcanoCoin {
     function getPaymentInfo() public view returns(uint256){
         return PaymentInfo.coinsSupply;
     }
-    function getUserNumber() public view returns(uint256){
-        return getNumber[owner];
+    function getUserNumber(address _owner) public view returns(uint256){
+        return getNumber[_owner];
     }
 }
-
