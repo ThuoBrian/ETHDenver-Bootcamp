@@ -1,59 +1,49 @@
-// SPDX-License-Identifier: UNLICENSED
-
+// SPDX-License-Identifier: UNLICENSED 
 pragma solidity ^0.8.0;
 
 contract VolcanoCoin {
     
+    uint public supply;
     address owner;
-    uint256 coinsSupply = 10000;
- 
-
-    mapping(address => uint256)getNumber;
     
-    struct Payment{
-        uint256 coinsSupply;
-        address owner;
+    struct Payment {
+        uint amount;
+        address recipient;
     }
+    mapping(address => uint) public balances;
+    mapping(address => Payment[]) payments;
     
-    Payment PaymentInfo;
-
-    event logChangeSupply(uint256); 
-    event tranferTokensInfo(address _from, address _to, uint256 _amount);
-
+    event supplyChanged(uint);
+    event tokensTransfered(uint, address);
+    
     constructor() {
         owner = msg.sender;
+        balances[owner] = 10000;
     }
     
-    modifier onlyOwner{
-        if(msg.sender == owner)
-        _;
+    modifier onlyOwner() {
+        if (msg.sender==owner) {
+            _;
+        }
     }
-  
-    function changeTotalSupply(uint256 _coins)public onlyOwner{
-        uint256 coins;
-        PaymentInfo.owner = msg.sender ;
-        coins = coinsSupply + _coins;
-        PaymentInfo.coinsSupply = coins;
-        emit logChangeSupply(PaymentInfo.coinsSupply);
+    
+    function increaseSupply() public onlyOwner {
+        supply+=1000;
+        emit supplyChanged(supply);
     }
-    function getTotalSupply() public view returns(uint256){
-        return PaymentInfo.coinsSupply;
+    
+    function getPayments(address _user) public view returns (Payment[] memory) {
+        return payments[_user];
     }
-    function getPaymentInfo() public view returns(uint256){
-        return PaymentInfo.coinsSupply;
-    }
-    function getUserNumber() public view returns(uint256){
-        return getNumber[PaymentInfo.owner];
-    }
-    function getOwnerBalance()public view returns(uint256){
-        uint256 balances;
-        balances = PaymentInfo.coinsSupply - coinsSupply;
-        return balances;
-    }
-    function tranferTokens(uint256 _amount, address _to) public returns(bool){
-        address _from = msg.sender;
-        owner = _to;
-        emit tranferTokensInfo(_from,_to,_amount);
-        return true;
+    
+    function transfer(uint _amount, address _recipient) public {
+        require(balances[msg.sender] >= _amount);
+        balances[_recipient] += _amount;
+        balances[msg.sender] -= _amount;
+        emit tokensTransfered(_amount, _recipient);
+        payments[msg.sender].push(Payment({
+            amount: _amount,
+            recipient: _recipient
+        }));
     }
 }
